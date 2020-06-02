@@ -10,6 +10,8 @@ pbtc = "*"
 [packages]
 jinja2 = "*"
 pdfkit = "*"
+protobuf = "*"
+grpcio = "*"
 
 [requires]
 python_version = "3.6"
