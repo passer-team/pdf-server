@@ -8,12 +8,18 @@ import os
 from jinja2 import Template
 import json
 import shutil
+import app_config
 
 TEMPLATE_ROOT = "../templates"
 PUBLIC_PATH = os.path.abspath(
     os.path.join(TEMPLATE_ROOT, 'public')
 )
 
+def get_docker_path(src):
+    return "/host-home" + src[5:]
+
+def get_host_path(src):
+    return "/home" + src[10:]
 
 def get_template(path: str):
     return os.path.join(TEMPLATE_ROOT, path, "template.html")
@@ -35,6 +41,8 @@ class ReportsGenerator(xy_units_pb2_grpc.ReportsGeneratorServicer):
         :param parameters: 要填充到html的参数
         :return:
         """
+        if app_config.IS_DOCKER:
+            resource_path = get_docker_path(resource_path)
         template_local_path = get_template(template_path)
         # Prepare assets
         # todo if template.html file not exist, create symbol link
@@ -73,6 +81,8 @@ class ReportsGenerator(xy_units_pb2_grpc.ReportsGeneratorServicer):
         }
         pdfkit.from_file(html_path, report_path, options)
         # pdfkit.configuration()
+        if app_config.IS_DOCKER:
+            report_path = get_host_path(report_path)
         return report_path
 
     def GenPdf(self, request: xy_units_pb2.GenPdfRequest, context):
