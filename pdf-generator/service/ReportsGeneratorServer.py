@@ -9,7 +9,7 @@ from jinja2 import Template
 import json
 import shutil
 
-TEMPLATE_ROOT = "../reports"
+TEMPLATE_ROOT = "../templates"
 PUBLIC_PATH = os.path.abspath(
     os.path.join(TEMPLATE_ROOT, 'public')
 )
