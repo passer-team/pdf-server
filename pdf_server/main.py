@@ -4,8 +4,9 @@ import logging
 
 import grpc
 import app_config
-from rpc import xy_units_pb2_grpc
+from rpc import xy_units_pb2_grpc, pdf_pb2_grpc
 from service.ReportsGeneratorServer import ReportsGenerator
+from service.PdfServer import Pdf
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -13,14 +14,12 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     xy_units_pb2_grpc.add_ReportsGeneratorServicer_to_server(ReportsGenerator(), server)
-    if app_config.IS_DEV:
-        logging.info("listening on port: 50053")
-        server.add_insecure_port('[::]:50053')   # development
-    else:
-        logging.info("listening on port: 50052")
-        server.add_insecure_port('[::]:50052')  # production / test
+    pdf_pb2_grpc.add_PdfServicer_to_server(Pdf(), server)
+
+    server.add_insecure_port(f'[::]:{app_config.LISTEN_PORT}')
+    
     server.start()
-    logging.info("server running ...")
+    logging.info(f'server running ..., listening port: {app_config.LISTEN_PORT}')
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
