@@ -139,4 +139,5 @@ cython_debug/
 
 # >>> Edit by Daryl.Xu
 templates
+app_config.py
 #<<<

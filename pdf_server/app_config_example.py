@@ -1,0 +1,4 @@
+# IS_DEV = False
+IS_DEV = True
+IS_DOCKER = True
+LISTEN_PORT = 50053
