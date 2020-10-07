@@ -24,6 +24,11 @@ class PdfStub(object):
                 request_serializer=pdf__pb2.RenderRequest.SerializeToString,
                 response_deserializer=pdf__pb2.RenderReply.FromString,
                 )
+        self.download = channel.unary_stream(
+                '/pdf.Pdf/download',
+                request_serializer=pdf__pb2.DownloadRequest.SerializeToString,
+                response_deserializer=pdf__pb2.Chunk.FromString,
+                )
 
 
 class PdfServicer(object):
@@ -31,17 +36,21 @@ class PdfServicer(object):
     """
 
     def uploadResource(self, request_iterator, context):
-        """Sends a greeting
-        rpc SayHello (XyAiRequest) returns (XyAiReply) {}
-        Sends a greeting again
-        rpc SayHelloAgain(XyAiRequest) returns (XyAiReply) {}
+        """上传pdf要使用到的资源文件
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def render(self, request, context):
-        """TODO １. 直接返回pdf文件; 2. 返回状态码判断之后下载
+        """将html渲染成pdf
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def download(self, request, context):
+        """下载pdf文件
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -59,6 +68,11 @@ def add_PdfServicer_to_server(servicer, server):
                     servicer.render,
                     request_deserializer=pdf__pb2.RenderRequest.FromString,
                     response_serializer=pdf__pb2.RenderReply.SerializeToString,
+            ),
+            'download': grpc.unary_stream_rpc_method_handler(
+                    servicer.download,
+                    request_deserializer=pdf__pb2.DownloadRequest.FromString,
+                    response_serializer=pdf__pb2.Chunk.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -100,5 +114,21 @@ class Pdf(object):
         return grpc.experimental.unary_unary(request, target, '/pdf.Pdf/render',
             pdf__pb2.RenderRequest.SerializeToString,
             pdf__pb2.RenderReply.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def download(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/pdf.Pdf/download',
+            pdf__pb2.DownloadRequest.SerializeToString,
+            pdf__pb2.Chunk.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

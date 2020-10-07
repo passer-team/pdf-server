@@ -23,6 +23,7 @@ def get_task_dir(uid: uuid.UUID, check_exist: bool = False) -> str:
 
     return dir
 
+
 def create_task() -> uuid.UUID:
     """
     使用uuid１，参考链接：https://juejin.im/post/6844903783219085319
@@ -34,3 +35,14 @@ def create_task() -> uuid.UUID:
     os.mkdir(dir)
     return uid
 
+
+def get_pdf_path(uid: uuid.UUID, check_exist: bool=False) -> str:
+    """
+    返回pdf文件的路径
+    :param uid: id of the task
+    """
+    task_dir = get_task_dir(uid, True)
+    pdf_path = os.path.join(task_dir, 'report.pdf')
+    if check_exist:
+        assert os.path.exists(pdf_path)
+    return pdf_path

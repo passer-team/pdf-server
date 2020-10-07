@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='pdf',
   syntax='proto3',
   serialized_options=b'\n\013io.grpc.pdfB\016PdfServerProtoP\001',
-  serialized_pb=b'\n\tpdf.proto\x12\x03pdf\"\x18\n\x05\x43hunk\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"X\n\x13UploadResourceReply\x12\x0f\n\x07message\x18\x01 \x01(\t\x12#\n\nstatusCode\x18\x02 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x0b\n\x03uid\x18\x03 \x01(\t\"U\n\rRenderRequest\x12\x12\n\ntemplateId\x18\x01 \x01(\t\x12\x0b\n\x03uid\x18\x02 \x01(\t\x12\x12\n\nparameters\x18\x03 \x01(\t\x12\x0f\n\x07pdfName\x18\x04 \x01(\t\"2\n\x0bRenderReply\x12#\n\nstatusCode\x18\x01 \x01(\x0e\x32\x0f.pdf.StatusCode*-\n\nStatusCode\x12\x0b\n\x07Unknown\x10\x00\x12\x06\n\x02Ok\x10\x01\x12\n\n\x06\x46\x61iled\x10\x02\x32s\n\x03Pdf\x12:\n\x0euploadResource\x12\n.pdf.Chunk\x1a\x18.pdf.UploadResourceReply\"\x00(\x01\x12\x30\n\x06render\x12\x12.pdf.RenderRequest\x1a\x10.pdf.RenderReply\"\x00\x42\x1f\n\x0bio.grpc.pdfB\x0ePdfServerProtoP\x01\x62\x06proto3'
+  serialized_pb=b'\n\tpdf.proto\x12\x03pdf\"\x18\n\x05\x43hunk\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"X\n\x13UploadResourceReply\x12\x0f\n\x07message\x18\x01 \x01(\t\x12#\n\nstatusCode\x18\x02 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x0b\n\x03uid\x18\x03 \x01(\t\"D\n\rRenderRequest\x12\x12\n\ntemplateId\x18\x01 \x01(\t\x12\x0b\n\x03uid\x18\x02 \x01(\t\x12\x12\n\nparameters\x18\x03 \x01(\t\"K\n\x0bRenderReply\x12#\n\nstatusCode\x18\x01 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x17\n\x0ftemplateVersion\x18\x02 \x01(\t\"\x1e\n\x0f\x44ownloadRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t*-\n\nStatusCode\x12\x0b\n\x07Unknown\x10\x00\x12\x06\n\x02Ok\x10\x01\x12\n\n\x06\x46\x61iled\x10\x02\x32\xa5\x01\n\x03Pdf\x12:\n\x0euploadResource\x12\n.pdf.Chunk\x1a\x18.pdf.UploadResourceReply\"\x00(\x01\x12\x30\n\x06render\x12\x12.pdf.RenderRequest\x1a\x10.pdf.RenderReply\"\x00\x12\x30\n\x08\x64ownload\x12\x14.pdf.DownloadRequest\x1a\n.pdf.Chunk\"\x00\x30\x01\x42\x1f\n\x0bio.grpc.pdfB\x0ePdfServerProtoP\x01\x62\x06proto3'
 )
 
 _STATUSCODE = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _STATUSCODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=273,
-  serialized_end=318,
+  serialized_start=313,
+  serialized_end=358,
 )
 _sym_db.RegisterEnumDescriptor(_STATUSCODE)
 
@@ -159,13 +159,6 @@ _RENDERREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='pdfName', full_name='pdf.RenderRequest.pdfName', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -179,7 +172,7 @@ _RENDERREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=134,
-  serialized_end=219,
+  serialized_end=202,
 )
 
 
@@ -197,6 +190,13 @@ _RENDERREPLY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='templateVersion', full_name='pdf.RenderReply.templateVersion', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -209,8 +209,39 @@ _RENDERREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=271,
+  serialized_start=204,
+  serialized_end=279,
+)
+
+
+_DOWNLOADREQUEST = _descriptor.Descriptor(
+  name='DownloadRequest',
+  full_name='pdf.DownloadRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='uid', full_name='pdf.DownloadRequest.uid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=281,
+  serialized_end=311,
 )
 
 _UPLOADRESOURCEREPLY.fields_by_name['statusCode'].enum_type = _STATUSCODE
@@ -219,6 +250,7 @@ DESCRIPTOR.message_types_by_name['Chunk'] = _CHUNK
 DESCRIPTOR.message_types_by_name['UploadResourceReply'] = _UPLOADRESOURCEREPLY
 DESCRIPTOR.message_types_by_name['RenderRequest'] = _RENDERREQUEST
 DESCRIPTOR.message_types_by_name['RenderReply'] = _RENDERREPLY
+DESCRIPTOR.message_types_by_name['DownloadRequest'] = _DOWNLOADREQUEST
 DESCRIPTOR.enum_types_by_name['StatusCode'] = _STATUSCODE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -250,6 +282,13 @@ RenderReply = _reflection.GeneratedProtocolMessageType('RenderReply', (_message.
   })
 _sym_db.RegisterMessage(RenderReply)
 
+DownloadRequest = _reflection.GeneratedProtocolMessageType('DownloadRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DOWNLOADREQUEST,
+  '__module__' : 'pdf_pb2'
+  # @@protoc_insertion_point(class_scope:pdf.DownloadRequest)
+  })
+_sym_db.RegisterMessage(DownloadRequest)
+
 
 DESCRIPTOR._options = None
 
@@ -259,8 +298,8 @@ _PDF = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=320,
-  serialized_end=435,
+  serialized_start=361,
+  serialized_end=526,
   methods=[
   _descriptor.MethodDescriptor(
     name='uploadResource',
@@ -278,6 +317,15 @@ _PDF = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_RENDERREQUEST,
     output_type=_RENDERREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='download',
+    full_name='pdf.Pdf.download',
+    index=2,
+    containing_service=None,
+    input_type=_DOWNLOADREQUEST,
+    output_type=_CHUNK,
     serialized_options=None,
   ),
 ])
