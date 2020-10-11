@@ -93,7 +93,7 @@ class ReportsGenerator(xy_units_pb2_grpc.ReportsGeneratorServicer):
         :return:
         """
         template_path: str = request.template
-        parameters: str = json.loads(request.parameters)
+        parameters: dict = json.loads(request.parameters)
         save_name: str = request.saveName
         resource_path: str = request.resourcePath
         print(template_path, parameters, save_name, resource_path)
