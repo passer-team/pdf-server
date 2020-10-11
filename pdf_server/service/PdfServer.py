@@ -62,12 +62,12 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
         return pdf_pb2.UploadResourceReply(statusCode=0, uid=str(uid), message="OK")
 
     def render(self, request, context):
+        # 暂时不使用template＿id，template.html使用文件上传的方式得到
         template_id: str = request.templateId
         uid = uuid.UUID(request.uid)
         parameters: dict = json.loads(request.parameters)
         logging.debug(f'Render request got: {template_id}, {uid}, {parameters}')
         
-        # TODO render html to pdf
         # 准备字体
         task.prepare_assets(uid)
 
@@ -78,9 +78,6 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
         PdfHelper.fill_template(template_path, report_html_path, parameters)
         PdfHelper.html_to_pdf(template_path, pdf_path)
 
-        # pdf_path = task.get_pdf_path(uid)
-
-        # os.system(f'cp ~/Downloads/VTKTextBook.pdf {pdf_path}')
         return pdf_pb2.RenderReply(statusCode=0, templateVersion='todo: get template version')
 
     def download(self, request, context):
