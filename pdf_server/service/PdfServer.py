@@ -82,8 +82,12 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
 
     def download(self, request, context):
         uid = uuid.UUID(request.uid)
-        pdf_path = task.get_pdf_path(uid, True)
-        with open(pdf_path, 'rb') as f:
+        filename = request.filename
+
+        file_path = task.get_download_path(uid, filename, True)
+        task.get
+        
+        with open(file_path, 'rb') as f:
             chunk = f.read(app_config.CHUNK_SIZE)
             while chunk:
                 # logging.debug(f'get a chunk: {len(chunk)}')

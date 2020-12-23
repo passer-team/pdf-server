@@ -57,6 +57,15 @@ def get_pdf_path(uid: uuid.UUID, check_exist: bool=False) -> str:
     """
     return _get_absolute_path(uid, 'report.pdf', check_exist)
 
+def get_download_path(uid: uuid.UUID, filename:str, check_exist: bool=False) -> str:
+    """
+    返回可下载文件的路径，只有在指定任务的根目录的文件才可以被下载
+    :param uid: id of the task
+    :param filename: filename
+    :param check_exist: check wheather the file exist
+    """
+    return _get_absolute_path(uid, filename, check_exist)
+
 
 def get_template_path(uid: uuid.UUID, check_exist: bool=False) -> str:
     """

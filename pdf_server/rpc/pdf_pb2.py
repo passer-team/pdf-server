@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='pdf',
   syntax='proto3',
   serialized_options=b'\n\013io.grpc.pdfB\016PdfServerProtoP\001',
-  serialized_pb=b'\n\tpdf.proto\x12\x03pdf\"\x18\n\x05\x43hunk\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"X\n\x13UploadResourceReply\x12\x0f\n\x07message\x18\x01 \x01(\t\x12#\n\nstatusCode\x18\x02 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x0b\n\x03uid\x18\x03 \x01(\t\"D\n\rRenderRequest\x12\x12\n\ntemplateId\x18\x01 \x01(\t\x12\x0b\n\x03uid\x18\x02 \x01(\t\x12\x12\n\nparameters\x18\x03 \x01(\t\"K\n\x0bRenderReply\x12#\n\nstatusCode\x18\x01 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x17\n\x0ftemplateVersion\x18\x02 \x01(\t\"\x1e\n\x0f\x44ownloadRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t*-\n\nStatusCode\x12\x0b\n\x07Unknown\x10\x00\x12\x06\n\x02Ok\x10\x01\x12\n\n\x06\x46\x61iled\x10\x02\x32\xa5\x01\n\x03Pdf\x12:\n\x0euploadResource\x12\n.pdf.Chunk\x1a\x18.pdf.UploadResourceReply\"\x00(\x01\x12\x30\n\x06render\x12\x12.pdf.RenderRequest\x1a\x10.pdf.RenderReply\"\x00\x12\x30\n\x08\x64ownload\x12\x14.pdf.DownloadRequest\x1a\n.pdf.Chunk\"\x00\x30\x01\x42\x1f\n\x0bio.grpc.pdfB\x0ePdfServerProtoP\x01\x62\x06proto3'
+  serialized_pb=b'\n\tpdf.proto\x12\x03pdf\"\x18\n\x05\x43hunk\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"X\n\x13UploadResourceReply\x12\x0f\n\x07message\x18\x01 \x01(\t\x12#\n\nstatusCode\x18\x02 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x0b\n\x03uid\x18\x03 \x01(\t\"D\n\rRenderRequest\x12\x12\n\ntemplateId\x18\x01 \x01(\t\x12\x0b\n\x03uid\x18\x02 \x01(\t\x12\x12\n\nparameters\x18\x03 \x01(\t\"K\n\x0bRenderReply\x12#\n\nstatusCode\x18\x01 \x01(\x0e\x32\x0f.pdf.StatusCode\x12\x17\n\x0ftemplateVersion\x18\x02 \x01(\t\"0\n\x0f\x44ownloadRequest\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x10\n\x08\x66ilename\x18\x02 \x01(\t*-\n\nStatusCode\x12\x0b\n\x07Unknown\x10\x00\x12\x06\n\x02Ok\x10\x01\x12\n\n\x06\x46\x61iled\x10\x02\x32\xa5\x01\n\x03Pdf\x12:\n\x0euploadResource\x12\n.pdf.Chunk\x1a\x18.pdf.UploadResourceReply\"\x00(\x01\x12\x30\n\x06render\x12\x12.pdf.RenderRequest\x1a\x10.pdf.RenderReply\"\x00\x12\x30\n\x08\x64ownload\x12\x14.pdf.DownloadRequest\x1a\n.pdf.Chunk\"\x00\x30\x01\x42\x1f\n\x0bio.grpc.pdfB\x0ePdfServerProtoP\x01\x62\x06proto3'
 )
 
 _STATUSCODE = _descriptor.EnumDescriptor(
@@ -43,8 +43,8 @@ _STATUSCODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=313,
-  serialized_end=358,
+  serialized_start=331,
+  serialized_end=376,
 )
 _sym_db.RegisterEnumDescriptor(_STATUSCODE)
 
@@ -228,6 +228,13 @@ _DOWNLOADREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filename', full_name='pdf.DownloadRequest.filename', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -241,7 +248,7 @@ _DOWNLOADREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=281,
-  serialized_end=311,
+  serialized_end=329,
 )
 
 _UPLOADRESOURCEREPLY.fields_by_name['statusCode'].enum_type = _STATUSCODE
@@ -298,8 +305,8 @@ _PDF = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=361,
-  serialized_end=526,
+  serialized_start=379,
+  serialized_end=544,
   methods=[
   _descriptor.MethodDescriptor(
     name='uploadResource',
