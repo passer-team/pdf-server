@@ -85,7 +85,6 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
         filename = request.filename
 
         file_path = task.get_download_path(uid, filename, True)
-        task.get
         
         with open(file_path, 'rb') as f:
             chunk = f.read(app_config.CHUNK_SIZE)
