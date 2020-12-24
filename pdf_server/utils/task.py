@@ -90,4 +90,6 @@ def prepare_assets(uid: uuid.UUID):
     :param uid: id of the task
     """
     fonts_path = _get_absolute_path(uid, 'fonts')
+    if os.path.exists(fonts_path):
+        return
     os.symlink(app_config.FONTS_PATH, fonts_path)
