@@ -76,7 +76,7 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
         report_html_path = task.get_report_html_path(uid, False)
         pdf_path = task.get_pdf_path(uid, False)
         PdfHelper.fill_template(template_path, report_html_path, parameters)
-        PdfHelper.html_to_pdf(template_path, pdf_path)
+        PdfHelper.html_to_pdf(report_html_path, pdf_path)
 
         return pdf_pb2.RenderReply(statusCode=0, templateVersion='todo: get template version')
 
