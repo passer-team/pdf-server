@@ -1,7 +1,7 @@
 FROM centos:8.1.1911
 
-LABEL org.label-schema.schema-version="1.0" \
-    org.label-schema.name="pdf-generator" \
+LABEL org.label-schema.schema-version="0.0.1" \
+    org.label-schema.name="pdf-server" \
     org.label-schema.license="GPLv2" \
     org.label-schema.build-date="20200602" 
 ENV LANG=zh_CN.UTF-8
@@ -13,8 +13,8 @@ COPY docker/*.rpm .tmp
 RUN dnf install -y .tmp/*.rpm
 # 不知道centos为什么导入官方gpg也不行
 # 参考 https://blog.csdn.net/cy309173854/article/details/69265738
-RUN dnf install -y --nogpgcheck python36 rsync which
-RUN pip3 install pipenv
+RUN dnf install -y --nogpgcheck python38 rsync which
+RUN pip3 install --user pipenv
 # <<<
 
 # >>> 创建普通用户和创建他可以操作的目录
