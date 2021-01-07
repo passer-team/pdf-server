@@ -30,7 +30,14 @@ class PdfHelper:
             "--margin-left": "0",
             "--quiet": None
         }
-        pdfkit.from_file(html_path, pdf_path, options)
+        pdfkit.from_file(html_path, pdf_path, options)  
+
+    @staticmethod
+    def html_to_pdf_puppeteer(html_path: str, pdf_path: str):
+        """
+        Convert the html to a pdf file with pupeteer
+        """
+        os.system(f'node {app_config.PDF_SCRIPT} {html_path} {pdf_path}')
 
     @staticmethod
     def fill_template(template_path: str, target_path: str, parameters):
@@ -76,7 +83,8 @@ class Pdf(pdf_pb2_grpc.PdfServicer):
         report_html_path = task.get_report_html_path(uid, False)
         pdf_path = task.get_pdf_path(uid, False)
         PdfHelper.fill_template(template_path, report_html_path, parameters)
-        PdfHelper.html_to_pdf(report_html_path, pdf_path)
+        # PdfHelper.html_to_pdf(report_html_path, pdf_path)
+        PdfHelper.html_to_pdf_puppeteer(report_html_path, pdf_path)
 
         return pdf_pb2.RenderReply(statusCode=0, templateVersion='todo: get template version')
 
