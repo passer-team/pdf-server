@@ -6,6 +6,7 @@ verify_ssl = true
 
 [dev-packages]
 pbtc = "*"
+pytest = "*"
 
 [packages]
 jinja2 = "*"
