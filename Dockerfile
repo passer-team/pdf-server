@@ -41,7 +41,7 @@ USER ${_USER_NAME}
 # 1. nodejs
 ENV PATH /usr/local/lib/nodejs/node-${NODE_VERSION}-${NODE_DISTRO}/bin/:$PATH
 RUN node -v;npm -v;which node
-RUN npm install puppeteer@7.1.0
+RUN npm install puppeteer@10.4.0
 # 2. pipenv
 COPY Pipfile* ./
 COPY workplace/fonts ./workplace/fonts

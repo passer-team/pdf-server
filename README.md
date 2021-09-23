@@ -11,4 +11,5 @@
 
 ## 启动docker实例
 
-- 启动我们构建好的镜像 `docker run -dit --rm -p 50052:50052 pdf-server:<版本号> bash`
+- 启动我们构建好的镜像 `docker run -dit --rm -p <宿主机端口>:50054 pdf-server:<版本号> bash`
+> 容器内部监听端口50054
