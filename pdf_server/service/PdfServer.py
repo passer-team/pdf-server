@@ -10,7 +10,7 @@ import jinja2
 
 import app_config
 from utils import task
-
+import math
 
 class PdfHelper:
     """
@@ -41,11 +41,22 @@ class PdfHelper:
 
     @staticmethod
     def fill_template(template_path: str, target_path: str, parameters):
+        def format_number(value:[int, float, math.nan, str], decimal:int = 2, default:[int, float, math.nan, str] = '--') -> [int, float, math.nan, str]:
+            if isinstance(value, (int, float)):
+                if not math.isnan(value):
+                    return round(value, decimal) or default
+                else:
+                    return default
+            else:
+                return default
         """
         Fill the template file
         """
+
+        env =jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.abspath(template_path)))
         template_file = open(template_path, 'r', encoding='utf-8')
-        template = jinja2.Template(template_file.read())
+        env.filters['format_number'] =format_number
+        template = env.from_string(template_file.read())
         render_res = template.render(data=parameters)
         template_file.close()
 
