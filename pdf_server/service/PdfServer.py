@@ -10,7 +10,7 @@ import jinja2
 
 import app_config
 from utils import task
-
+import math
 
 class PdfHelper:
     """
@@ -41,11 +41,34 @@ class PdfHelper:
 
     @staticmethod
     def fill_template(template_path: str, target_path: str, parameters):
+        def format_number(value:[int, float, math.nan, str], 
+                          digits:int = 0, 
+                          placeholder:any = '--'
+                          ) -> any:
+            """
+            格式化数字，传入字符串时尝试转为浮点数。当value为 None或math.NaN时返回default，传入其他无法转为数字的值
+            时则给出提示字符串。
+            Args:
+                value: 传入值
+                digits: 保留位数
+                placeholder: 用于替换 None 或 math.NaN 的值
+            """
+            if value is None or math.isnan(value):
+                return placeholder
+            try:
+                value = float(value)
+                return f'{value:.{digits}f}'  
+            except ValueError:
+                return 'Invalid number:' + str(value)
+            
         """
         Fill the template file
         """
+
+        env =jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.abspath(template_path)))
         template_file = open(template_path, 'r', encoding='utf-8')
-        template = jinja2.Template(template_file.read())
+        env.filters['format_number'] =format_number
+        template = env.from_string(template_file.read())
         render_res = template.render(data=parameters)
         template_file.close()
 
