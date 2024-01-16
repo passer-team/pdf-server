@@ -43,8 +43,8 @@ class PdfHelper:
     def fill_template(template_path: str, target_path: str, parameters):
         def format_number(value:[int, float, math.nan, str], 
                           digits:int = 0, 
-                          placeholder: str = '--'
-                          ) -> str:
+                          placeholder:any = '--'
+                          ) -> any:
             """
             格式化数字，传入字符串时尝试转为浮点数。当value为 None或math.NaN时返回default，传入其他无法转为数字的值
             时则给出提示字符串。
@@ -53,7 +53,7 @@ class PdfHelper:
                 digits: 保留位数
                 placeholder: 用于替换 None 或 math.NaN 的值
             """
-            if math.isnan(value) or value is None:
+            if value is None or math.isnan(value):
                 return placeholder
             try:
                 value = float(value)
