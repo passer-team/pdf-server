@@ -41,14 +41,26 @@ class PdfHelper:
 
     @staticmethod
     def fill_template(template_path: str, target_path: str, parameters):
-        def format_number(value:[int, float, math.nan, str], decimal:int = 2, default:[int, float, math.nan, str] = '--') -> [int, float, math.nan, str]:
-            if isinstance(value, (int, float)):
-                if not math.isnan(value):
-                    return round(value, decimal) or default
-                else:
-                    return default
-            else:
-                return default
+        def format_number(value:[int, float, math.nan, str], 
+                          digits:int = 0, 
+                          placeholder: str = '--'
+                          ) -> str:
+            """
+            格式化数字，传入字符串时尝试转为浮点数。当value为 None或math.NaN时返回default，传入其他无法转为数字的值
+            时则给出提示字符串。
+            Args:
+                value: 传入值
+                digits: 保留位数
+                placeholder: 用于替换 None 或 math.NaN 的值
+            """
+            if math.isnan(value) or value is None:
+                return placeholder
+            try:
+                value = float(value)
+                return f'{value:.{digits}f}'  
+            except ValueError:
+                return 'Invalid number:' + str(value)
+            
         """
         Fill the template file
         """
