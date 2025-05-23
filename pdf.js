@@ -1,5 +1,5 @@
 /**
- * @author Daryl Xu <xuziqiang@zyheal.com>
+ * @author Daryl Xu <ziqiang_xu@qq.com>
  * convert html to pdf
  */
 // https://pptr.dev/
@@ -19,7 +19,7 @@ console.log(`${args[0]} ${args[1]}`);
     `file://${path.resolve(args[0])}`,
     { waitUntil: 'networkidle2' });
   await page.pdf({
-    // path: '/home/ziqiang_xu/Seafile/LiverDataExample(12)/selected/01190626V001/report/report.pdf', 
+    timeout: 120000, // 超过两分钟则渲染失败 
     path: args[1],
     format: 'A4',
     printBackground: true
